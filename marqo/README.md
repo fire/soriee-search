@@ -33,3 +33,8 @@ micromamba run -n base python .\first-search.py
 micromamba run -n base pip install streamlit
 micromamba run -n base streamlit run streamlit.py
 ```
+
+```bat
+# load photos from https://github.com/alexeygrigorev/clothing-dataset
+python3 -m http.server 8222
+```
