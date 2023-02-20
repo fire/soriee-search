@@ -16,12 +16,12 @@ current_entry = []
 for i in range(length_of_input):
     c = comics[i]
     entry = {
-            "Title": c["title"], 
-            "Description": str(c),
-            "Instruction": "Represent the manga document for retrieval" }
+            "title": c["title"], 
+            "description": str(c),
+            "instruction": "Represent the manga document for retrieval" }
     entries.append(entry)
 mq.index(database_name).add_documents(entries, 
     device="cuda", client_batch_size=1000, server_batch_size=1000)
 results = mq.index(database_name).search(
-    q="List some spice and wolf.", searchable_attributes=["Title", "Description", "Instruction"]
+    q="List some spice and wolf.", searchable_attributes=["title", "description", "instruction"]
 )

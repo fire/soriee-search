@@ -193,9 +193,17 @@ def main():
             st.write("Results (Top 30):")
             col = st.columns(5)
             for hit in enumerate(st.session_state['results']['hits']):
-                document = hit[1]['Description']
+                document = hit[1]['description']
                 if document is not None:
                     st.write(document)
+                img = hit[1]['image']
+                if img is not None:
+                    if (img[0] >= st.session_state['page']*10) and (img[0] < (st.session_state['page']*10 + 10)):
+                        with col[(img[0]%10)//2]:
+                            if img.startswith("http://host.docker.internal:8222/"):
+                                pic_url = 'http://127.0.0.1:8222/' + pic.split("http://host.docker.internal:8222/")[1]
+                                image = Image.open(requests.get(pic_url, stream=True).raw)
+                                st.image(image, caption=img[1]['title'])
         else:
             st.write("No results")
 
