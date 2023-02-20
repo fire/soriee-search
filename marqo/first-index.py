@@ -13,14 +13,15 @@ entries = []
 length_of_input = len(comics)
 print("Entries: " + str(length_of_input))
 current_entry = []
-bucket_size = round(float(length_of_input) / 200)
 for i in range(length_of_input):
     c = comics[i]
-    id = c["title"]
     entry = {
             "Title": c["title"], 
-            "Description": c,
+            "Description": str(c),
             "Instruction": "Represent the manga document for retrieval" }
     entries.append(entry)
-mq.index("soriee-search").add_documents(entries, 
-    device="cuda")
+mq.index(database_name).add_documents(entries, 
+    device="cuda", client_batch_size=1000, server_batch_size=1000)
+results = mq.index(database_name).search(
+    q="List some spice and wolf.", searchable_attributes=["Title", "Description", "Instruction"]
+)

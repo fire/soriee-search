@@ -21,11 +21,13 @@ sudo apt-get update && sudo apt-get install docker-compose-plugin
 sudo usermod -aG docker $USER
 sudo update-alternatives --set iptables /usr/sbin/iptables-legacy
 sudo update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
-sudo service start docker
+sudo service docker start
 ```
 
 ```bat
 docker rm -f marqo
 docker pull marqoai/marqo:latest
 docker run --name marqo --gpus all -it --privileged -p 8882:8882 --add-host host.docker.internal:host-gateway marqoai/marqo:latest
+micromamba run -n base python .\first-index.py
+micromamba run -n base python .\first-search.py
 ```

@@ -1,7 +1,14 @@
 import marqo
 
 mq = marqo.Client(url='http://127.0.0.1:8882')
-results = mq.index("soriee-search").search(
-    q="List some spice and wolf.", searchable_attributes=["Title", "Description", "Instruction"]
+index = "soriee-search"
+results = mq.index(index).get_stats()
+print(results)
+results = mq.index(index).search(
+    q="'Virtual Reality'", searchable_attributes=["Title", "Description", "Instruction"]
 )
+print(results)
+results = mq.get_cuda_info()
+print(results)
+results = mq.get_indexes()
 print(results)
