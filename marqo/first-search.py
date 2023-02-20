@@ -8,7 +8,5 @@ results = mq.index(index).search(
     q="'Virtual Reality'", searchable_attributes=["Title", "Description", "Instruction"]
 )
 print(results)
-results = mq.get_cuda_info()
-print(results)
 results = mq.get_indexes()
 print(results)
