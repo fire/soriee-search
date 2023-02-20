@@ -143,8 +143,8 @@ def main():
         elif search_image_url != "" and search_image_url != None:
             results = mq.index(index).search(
                 search_image_url,
-                filter_string=create_filter_str(filtering), 
-                searchable_attributes=[i.lower() for i in searchable_attr],
+                # filter_string=create_filter_str(filtering), 
+                # searchable_attributes=[i.lower() for i in searchable_attr],
                 limit=30
                 )
 
@@ -156,8 +156,8 @@ def main():
 
             results = mq.index(index).search(
                 uploaded_img_path,
-                filter_string=create_filter_str(filtering), 
-                searchable_attributes=[i.lower() for i in searchable_attr],
+                # filter_string=create_filter_str(filtering), 
+                # searchable_attributes=[i.lower() for i in searchable_attr],
                 limit=30
                 )
 
