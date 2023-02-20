@@ -21,7 +21,7 @@ for i in range(length_of_input):
             "instruction": "Represent the manga document for retrieval" }
     entries.append(entry)
 mq.index(database_name).add_documents(entries, 
-    device="cuda", client_batch_size=1000, server_batch_size=1000)
+    device="cuda", client_batch_size=1000, server_batch_size=1000, processes=4)
 results = mq.index(database_name).search(
     q="List some spice and wolf.", searchable_attributes=["title", "description", "instruction"]
 )
