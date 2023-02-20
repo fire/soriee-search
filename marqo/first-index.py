@@ -22,4 +22,5 @@ for i in range(length_of_input):
             "Description": c,
             "Instruction": "Represent the manga document for retrieval" }
     entries.append(entry)
-mq.index("soriee-search").add_documents(entries)
+mq.index("soriee-search").add_documents(entries, 
+    device="cuda")
