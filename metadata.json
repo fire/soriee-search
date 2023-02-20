@@ -1,0 +1,11 @@
+{
+    "plugins": {
+        "datasette-faiss": {
+            "tables": [
+                ["soriee-search", "soriee-search"],
+                ["soriee-search", "query"]
+            ]
+        },
+        "datasette-saved-queries": {}
+    }
+}

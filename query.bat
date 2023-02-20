@@ -1,0 +1,1 @@
+micromamba run -n base python query.py
