@@ -1,10 +1,5 @@
 # Marqo
 
-```bat
-docker rm -f marqo
-docker pull marqoai/marqo:latest
-docker run --name marqo --gpus all -it --privileged -p 8882:8882 --add-host host.docker.internal:host-gateway marqoai/marqo:latest
-```
 
 ```bash
 bash
@@ -15,6 +10,22 @@ sudo dpkg -i cuda-repo-wsl-ubuntu-12-0-local_12.0.0-1_amd64.deb
 sudo cp /var/cuda-repo-wsl-ubuntu-12-0-local/cuda-*-keyring.gpg /usr/share/keyrings/
 sudo apt-get update
 sudo apt-get -y install cuda
-sudo apt update && sudo apt install -y nvidia-docker2
-sudo service docker start
+distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
+      && curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
+      && curl -s -L https://nvidia.github.io/libnvidia-container/$distribution/libnvidia-container.list | \
+            sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
+            sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
+sudo apt-get update
+sudo apt-get install -y nvidia-docker2
+sudo apt-get update && sudo apt-get install docker-compose-plugin
+sudo usermod -aG docker $USER
+sudo update-alternatives --set iptables /usr/sbin/iptables-legacy
+sudo update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
+sudo service start docker
+```
+
+```bat
+docker rm -f marqo
+docker pull marqoai/marqo:latest
+docker run --name marqo --gpus all -it --privileged -p 8882:8882 --add-host host.docker.internal:host-gateway marqoai/marqo:latest
 ```
