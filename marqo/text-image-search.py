@@ -16,7 +16,7 @@ st.set_page_config(
 )
 
 template_attributes = ["Estimated owners","Instruction","AppID","Name","Release date","Peak CCU","Required age","Price","DLC count","About the game","Supported languages","Full audio languages","Reviews","Header image","Website","Support url","Support email","Windows","Mac","Linux","Metacritic score","Metacritic url","User score","Positive","Negative","Score rank","Achievements","Recommendations","Notes","Average playtime forever","Average playtime two weeks","Median playtime forever","Median playtime two weeks","Developers","Publishers","Categories","Genres","Tags","Screenshots,Movies"]
-            
+
 mq = marqo.Client(url='http://127.0.0.1:8882') # Connection to Marqo Docker Container
 cwd = os.getcwd() # Get current working directory
 index = "soriee-search"
@@ -40,26 +40,9 @@ def reset_state():
 def create_filter_str(filter_list):
     filter_string = ""
 
-    if 'Kids' in filter_list:
-        filter_string += 'kids:true'
-        filter_list.remove('Kids')
-    else:
-        filter_string += 'kids:false'
-
-        
-    if 'yaoi' in filter_list:
-        filter_string += 'yaoi:true'
-        filter_list.remove('yaoi')
-    else:
-        filter_string += 'yaoi:false'
-
-
-    if 'bl' in filter_list:
-        filter_string += 'bl:true'
-        filter_list.remove('bl')
-    else:
-        filter_string += 'bl:false'
-
+    for filter in filter_list:
+        filter_string = filter + ":true"
+        filter_list.remove(filter)
 
     for field in filter_list:
         filter_string += f" AND label:({field})"
@@ -135,7 +118,7 @@ def main():
     if ((search_image is not None) or (search_image_url) or (search_text)) and search_btn:
         if search_text != "" and search_text != None:
             results = mq.index(index).search(
-                search_text,
+                q=search_text,
                 # filter_string=create_filter_str(filtering),
                 search_method=search_text_mode.upper(), 
                 # searchable_attributes=[i.lower() for i in searchable_attr],
@@ -146,7 +129,7 @@ def main():
             results = mq.index(index).search(
                 search_image_url,
                 # filter_string=create_filter_str(filtering), 
-                # searchable_attributes=[i.lower() for i in searchable_attr],
+                #searchable_attributes=[i.lower() for i in searchable_attr],
                 limit=30
                 )
 
@@ -158,8 +141,8 @@ def main():
 
             results = mq.index(index).search(
                 uploaded_img_path,
-                # filter_string=create_filter_str(filtering), 
-                # searchable_attributes=[i.lower() for i in searchable_attr],
+                filter_string=create_filter_str(filtering), 
+                searchable_attributes=[i.lower() for i in searchable_attr],
                 limit=30
                 )
 

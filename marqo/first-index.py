@@ -59,7 +59,7 @@ for i in range(length_of_input):
             }
     entries.append(entry)
 mq.index(database_name).add_documents(entries, 
-    device="cuda", client_batch_size=20, processes=4)
+    device="cuda", client_batch_size=100, server_batch_size=100, processes=2)
 results = mq.index(database_name).search(
     q="List some spice and wolf.", searchable_attributes=["Source", "Instruction","AppID","Name","Release date","Estimated owners","Peak CCU","Required age","Price","DLC count","About the game","Supported languages","Full audio languages","Reviews","Header image","Website","Support url","Support email","Windows","Mac","Linux","Metacritic score","Metacritic url","User score","Positive","Negative","Score rank","Achievements","Recommendations","Notes","Average playtime forever","Average playtime two weeks","Median playtime forever","Median playtime two weeks","Developers","Publishers","Categories","Genres","Tags","Screenshots,Movies"]
 )
