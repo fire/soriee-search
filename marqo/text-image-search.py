@@ -15,7 +15,7 @@ st.set_page_config(
     menu_items={}
 )
 
-template_attributes = ["Source", "Instruction","AppID","Name","Release date","Estimated owners","Peak CCU","Required age","Price","DLC count","About the game","Supported languages","Full audio languages","Reviews","Header image","Website","Support url","Support email","Windows","Mac","Linux","Metacritic score","Metacritic url","User score","Positive","Negative","Score rank","Achievements","Recommendations","Notes","Average playtime forever","Average playtime two weeks","Median playtime forever","Median playtime two weeks","Developers","Publishers","Categories","Genres","Tags","Screenshots,Movies"]
+template_attributes = ["Estimated owners","Instruction","AppID","Name","Release date","Peak CCU","Required age","Price","DLC count","About the game","Supported languages","Full audio languages","Reviews","Header image","Website","Support url","Support email","Windows","Mac","Linux","Metacritic score","Metacritic url","User score","Positive","Negative","Score rank","Achievements","Recommendations","Notes","Average playtime forever","Average playtime two weeks","Median playtime forever","Median playtime two weeks","Developers","Publishers","Categories","Genres","Tags","Screenshots,Movies"]
             
 mq = marqo.Client(url='http://127.0.0.1:8882') # Connection to Marqo Docker Container
 cwd = os.getcwd() # Get current working directory
@@ -196,11 +196,25 @@ def main():
             col = st.columns(5)
             for hit in enumerate(st.session_state['results']['hits']):  
                 name = hit[1]['Name']
-                if name is not None:
-                    st.write(name)   
+                estimated_owners = hit[1]['Estimated owners']
                 tags = hit[1]['Tags']
+                if estimated_owners is not None:
+                    estimated_owners = " (" + estimated_owners + " estimated owners)"
+                else:
+                    estimated_owners = ""
                 if tags is not None:
-                    st.write(tags)
+                    tags = " - (" + tags + ")"
+                else:
+                    tags = ""
+                website = hit[1]['Website']
+                if website is not None:
+                    st.markdown('[{0}]({1})'.format(name, website), unsafe_allow_html=True)
+                else:
+                    st.write(name)
+                st.write(estimated_owners + tags)
+                about_the_game = hit[1]["About the game"]
+                if about_the_game is not None:
+                    st.write(about_the_game)
         else:
             st.write("No results")
 
