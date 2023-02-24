@@ -28,10 +28,11 @@ sudo service docker start
 docker rm -f marqo
 docker pull marqoai/marqo:latest
 docker run --name marqo --gpus all -it --privileged -p 8882:8882 --add-host host.docker.internal:host-gateway marqoai/marqo:latest
+docker log --follow marqo
 micromamba run -n base python .\first-index.py
 micromamba run -n base python .\first-search.py
 micromamba run -n base pip install streamlit
-micromamba run -n base streamlit run streamlit.py
+micromamba run -n base streamlit run text-image-search.py
 ```
 
 ```bat

@@ -15,6 +15,8 @@ st.set_page_config(
     menu_items={}
 )
 
+template_attributes = ["Source", "Instruction","AppID","Name","Release date","Estimated owners","Peak CCU","Required age","Price","DLC count","About the game","Supported languages","Full audio languages","Reviews","Header image","Website","Support url","Support email","Windows","Mac","Linux","Metacritic score","Metacritic url","User score","Positive","Negative","Score rank","Achievements","Recommendations","Notes","Average playtime forever","Average playtime two weeks","Median playtime forever","Median playtime two weeks","Developers","Publishers","Categories","Genres","Tags","Screenshots,Movies"]
+            
 mq = marqo.Client(url='http://127.0.0.1:8882') # Connection to Marqo Docker Container
 cwd = os.getcwd() # Get current working directory
 index = "soriee-search"
@@ -120,8 +122,8 @@ def main():
 
     with st.expander("Search Settings"):
         attr_col, filter_col = st.columns(2)
-        with attr_col:    
-            searchable_attr = st.multiselect('Searchable Attributes', ['Title', 'Description'], default=['Title', 'Description'])
+        with attr_col:
+           searchable_attr = st.multiselect('Searchable Attributes', template_attributes, default=template_attributes)
 
         with filter_col:
             filtering = st.multiselect('Pre-filtering Options', ['yaoi', 'bl'], default=None)
@@ -192,10 +194,13 @@ def main():
         if st.session_state['results']['hits']:
             st.write("Results (Top 30):")
             col = st.columns(5)
-            for hit in enumerate(st.session_state['results']['hits']):
-                document = hit[1]['description']
-                if document is not None:
-                    st.write(document)
+            for hit in enumerate(st.session_state['results']['hits']):  
+                name = hit[1]['Name']
+                if name is not None:
+                    st.write(name)   
+                tags = hit[1]['Tags']
+                if tags is not None:
+                    st.write(tags)
         else:
             st.write("No results")
 
