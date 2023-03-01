@@ -1,1 +1,0 @@
-micromamba run  -n base python create.py
