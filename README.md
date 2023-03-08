@@ -1,5 +1,8 @@
-# Marqo
+# Soriee Search
 
+The code is a set of commands for setting up and running a search application called "Soriee Search". It involves installing CUDA, NVIDIA container toolkit, Docker, and other dependencies. The application uses a pre-built Docker image called "marqoai/marqo:latest" to run a Python script that performs text and image searches. The code also includes a command to load photos from a specific GitHub repository using a local HTTP server.
+
+# Marqo
 
 ```bash
 bash
